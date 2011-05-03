@@ -49,10 +49,16 @@ class MySQL
 		mysql_close($this->open);
 	}
 	
+	/**
+	 * Purifica le stringhe per l'inserimento in Database (Anti SQL Injection)
+	 */
 	public function mysql_parse($stringa) {
 		return mysql_real_escape_string($stringa);
 	}
 	
+	/**
+	 * Parser Generale (Anti XSS and SQL Injection)
+	 */
 	public function str_parse($string) {
 		return mysql_real_escape_string(htmlspecialchars($string));
 	}

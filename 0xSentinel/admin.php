@@ -18,6 +18,7 @@ include_once("lib/banip.class.php");
 $layout = new layout();
 
 $layout->header();
+$layout->logo();
 
 $mysql = new MySQL();
 
@@ -66,15 +67,15 @@ switch($mode) {
 	break;
 	
 	case 'delete_log':
-		$admin->delete_log($_GET['id']);
+		$admin->delete_log($_GET['id'], @$_REQUEST['security']);
 	break;
 	
 	case 'delete_rule':
-		$admin->delete_rule($_GET['id']);
+		$admin->delete_rule($_GET['id'], @$_REQUEST['security']);
 	break;
 	
 	case 'edit_rule':
-		$admin->edit_rule($_GET['id']);
+		$admin->edit_rule($_GET['id'], @$_REQUEST['security']);
 	break;
 	
 	/**
@@ -89,10 +90,13 @@ switch($mode) {
 	break;
 	
 	case 'delete_ip':
-		$ban_ip->delete_ip($_GET['id']);
+		$ban_ip->delete_ip($_GET['id'], @$_REQUEST['security']);
 	break;
 	
 	case 'Logout':
+	    if(@$_REQUEST['security'] != $_SESSION['token'])
+	        die("CSRF Attemp!");
+	    
 		session_destroy();
 		header('Location: index.php');
 	break;

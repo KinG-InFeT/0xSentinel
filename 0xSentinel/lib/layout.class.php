@@ -8,7 +8,7 @@
  * @copyright GPL
  */
 
-define("VERSION","1.0 - RC2");
+define("VERSION","1.0");
 
 if (preg_match("/layout.class.php/", $_SERVER['PHP_SELF'])) die(htmlspecialchars($_SERVER['PHP_SELF']));
 
@@ -19,7 +19,7 @@ class layout
 	 * Logo
 	 */	
 	public function logo() {
-		print "<h1 align='center'>0xSentinel - Web Security System</h1>";
+		print "\n<h1 align='center'>0xSentinel - Web Security System</h1>";
 	}
 	
 	/**
@@ -40,7 +40,7 @@ class layout
 	 * menu normale senza login
 	 */	
 	public function menu() {
-		print "<hr />\n<table width='auto'>\n"
+		print "<hr />\n<table class=\"menu\" width='auto'>\n"
 			."<tr align='center'>\n"
 				."<td width='500'><a href = 'login.php'>[-Login-]</a></td>\n"
 				."<td width='500'><a href = 'about.php'>[-About-]</a></td>\n"
@@ -64,7 +64,7 @@ class layout
 	 * Menu amministrativo
 	 */		
 	public function admin_menu() {
-		print "<table width='auto'>\n"
+		print "<table class=\"menu\" width='auto'>\n"
 			."<tr align='center'>\n"
 				."<td width='501'><a href = 'admin.php?action=Status'>[-Status-]</a></td>\n"
 				."<td width='501'><a href = 'admin.php?action=Settings'>[-Settings-]</a></td>\n"
@@ -72,7 +72,7 @@ class layout
 				."<td width='501'><a href = 'admin.php?action=ban_ip'>[-Ban IP-]</a></td>\n"
 				."<td width='501'><a href = 'admin.php?action=Logs'>[-Logs-]</a></td>\n"
 				."<td width='501'><a href = 'index.php?act=banner'>[-Banner-]</a></td>\n"
-				."<td width='501'><a href = 'admin.php?action=Logout'>[-Logout-]</a></td>\n"
+				."<td width='501'><a href = 'admin.php?action=Logout&security=".$_SESSION['token']."'>[-Logout-]</a></td>\n"
 			."</tr>\n"
 		."</table>\n<br />\n<br />\n";
 	}

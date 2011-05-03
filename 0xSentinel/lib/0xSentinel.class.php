@@ -161,6 +161,13 @@ class Sentinel extends MySQL
  	}
 
 	public function blocca($page, $query, $ref, $IP) {
+    	global $db_host, $db_user, $db_pass, $db_name;
+	
+		$this->Open($db_host, $db_user, $db_pass, $db_name);
+		
+		$ris = $this->Query("SELECT email FROM 0xSentinel_settings");
+		$row = mysql_fetch_row($ris);
+		
 		$block = "<html>"
 				. "\n<head>"
 				. "\n<link rel='StyleSheet' type='text/css'>"
@@ -202,6 +209,9 @@ class Sentinel extends MySQL
 				. "\n</p>"
 				. "\n</td>"
 				. "\n</tr>"
+				. "\n</td>"
+		        . "\n    <td><br />Se pensi che il sistema di sicurezza 0xSentinel ha bloccato un Falso Positivo, contatta <a href=\"meilto:".$row[0]."\">l'ammministratore</a> del sito e provvederà al fix delle regole</td>"
+         	    . "\n    </tr>"
 				. "\n<tr> "
 				. "\n<td height=\"38\" align='right'><em><a href=\"http://0xproject.hellospace.net/#0xSentinel\">0xSentinel</a> By <a href=\"http://www.kinginfet.net/\">KinG-InFeT</a></em></td>"
 				. "\n</tr>"
@@ -218,13 +228,32 @@ class Sentinel extends MySQL
 		
 		$regola = $this->mysql_parse($regola);
 		
-		if(($regola == 'acunetix') || ($regola == 'perl')) {
+		if(($regola == 'scanner' ) || 
+		   ($regola == 'perl'     ) || 
+		   ($regola == 'cookie'   ) ||
+		   ($regola == 'csrf'     ) ||
+		   ($regola == 'session'  ) ||
+		   ($regola == 'fpd'      )
+		  ) {
 		
-			if($regola == 'acunetix')
-				$type = "Acunetix Scanner";
+			if($regola == 'scanner')
+				$type = "Scanning/Crawling Attack";
 				
 			if($regola == 'perl')
 				$type = "Exploit in PERL";
+			
+			if($regola == 'cookie')
+			    $type = "\$_COOKIE Attack";
+			    
+			if($regola == 'session')
+			    $type = "\$_SESSION Attack";
+			
+			if($regola == 'csrf')
+			    $type = "Cross Site Request Forgery";
+			    
+			if($regola == 'fpd')
+			    $type = "Full Path Disclosure Attack";
+			    
 		}else{
 				
 			$sql  = $this->Query("SELECT type,descrizione FROM 0xSentinel_rules WHERE regola = '{$regola}'");
@@ -246,18 +275,10 @@ class Sentinel extends MySQL
 				
 				case 'rfi':
 					$type = $row['descrizione'];
-				break;	
+				break;
 				
 				case 'log_poisoning':
 					$type = $row['descrizione'];
-				break;
-				
-				case 'cookie':
-					$type = "Cookie Attack";
-				break;
-				
-				case 'csrf':
-					$type = 'Cross Site Request Forgery';
 				break;
 				
 				default:
@@ -284,6 +305,18 @@ class Sentinel extends MySQL
 		$this->Query("INSERT INTO 0xSentinel_logs (pagina, query_string, type_attack, referer, ip, data) VALUES ('{$pagina}', '{$query_string}', '{$type_attack}', '{$referer}', '{$ip}', 'Il {$data} alle ore {$ora}')");
 		$this->Close();
 		$this->email_notification($pagina, $query_string, $referer, $ip, $data, $ora, $_SERVER['HTTP_USER_AGENT'], $type_attack);
+	}
+	
+	public function check_FPD() {
+				
+		foreach($_GET as $request) 
+		{
+            if(is_array($request))
+            {
+				$this->logga($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR'], "fpd");
+				$this->blocca($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR']);
+			}
+		}
 	}
 	
 	public function check_GET() {
@@ -346,7 +379,7 @@ class Sentinel extends MySQL
 		{
 			foreach($this->regole as $regex)
 			{
-				if (preg_match("{$regex}", rawurldecode($request)))
+				if (preg_match("{$regex}", (string) $request))
 				{
 					$this->logga($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR'], "cookie");
 					$this->blocca($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR']);
@@ -355,9 +388,32 @@ class Sentinel extends MySQL
 		}		
 	}
 	
-	public function check_CSRF() {
-                $post = join($_POST);
-                if($post != "" && $_SERVER['HTTP_REFERER'] != "") {
+	public function check_SESSION() {
+		global $db_host, $db_user, $db_pass, $db_name;
+	
+		$this->Open($db_host, $db_user, $db_pass, $db_name);
+		
+		$rules = $this->Query("SELECT * FROM 0xSentinel_rules");
+			
+		while ($row = mysql_fetch_array ($rules))
+			$this->regole[] =  $row['regola'];
+				
+		foreach($_SESSION as $request)
+		{
+			foreach($this->regole as $regex)
+			{
+				if (preg_match("{$regex}", (string) $request))
+				{
+					$this->logga($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR'], "session");
+					$this->blocca($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR']);
+				}
+			}
+		}		
+	}
+	
+	public function check_CSRF($http_referer) {
+                $post = join($_REQUEST);
+                if($post != "" && $http_referer != "") {
                         if(preg_match("/www\./i",$_SERVER['HTTP_HOST'])) {
                                 $exp  = explode("www.",$_SERVER['HTTP_HOST']);
                                 $host = $exp[1];
@@ -377,15 +433,15 @@ class Sentinel extends MySQL
 	public function check_useragent() {
 		//Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322) UA di acunetix 5.0 e 6.0
 		if(preg_match('/(acunetix|scanner|\.NET CLR 1\.1\.4322|WVS|PTX|Nikto)/i',$_SERVER['HTTP_USER_AGENT'])) {
-			$regola = "acunetix";
+			$regola = "scanner";
 			$this->logga($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR'], $regola);
-			exit;
+			exit(0);
 		}
 			
 		if(preg_match('/libwww-perl/i',$_SERVER['HTTP_USER_AGENT'])) {
 			$regola = "perl";
 			$this->logga($_SERVER['PHP_SELF'], $_SERVER['QUERY_STRING'], @$_SERVER['HTTP_REFERER'], $_SERVER['REMOTE_ADDR'], $regola);	
-			exit;
+			exit(0);
 		}
 	}
 	

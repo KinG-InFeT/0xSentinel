@@ -40,6 +40,7 @@ if(!empty($_POST['username']) && !empty($_POST['password'])) {
 	if(($user == $row['admin_user']) && ($pass == $row['admin_pass'])) {
 	
 		$_SESSION['0xSentinel']['admin'] = $row['admin_pass'];
+		$_SESSION['token']               = md5(rand(1,999999));
 		header('Location: admin.php');
 		
 	}else{	

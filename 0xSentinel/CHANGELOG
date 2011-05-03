@@ -1,6 +1,20 @@
 CHANGELOG FILE
 Progetto: 0xSentinel
 
+v1.0 !Stable!
+    [FIX] Minor bug fix in the installazion steps and SQL Create table
+    [FIX] FIX ALL CSRF [HOT]
+    [FIX] Completamente riscritta la funziona per il controllo di aggiornamenti [HOT]
+    [REV] Revisionate completamente le regex della sentinella
+        [ADDED] Aggiunte alcune regole per il checking degli attacchi (Thanks PHPIDS WAS 2.0)
+    [FIX] Minor bug fix in CSS style
+    [REV] Notevolmente migliorato l'aspetto grafico con l'aggiunta di qualche immagine
+    [ADDED] Aggiunta protezione contro le Full Path Disclosure
+    [FIX] Fixati il report di attacchi via $_COOKIE[] e di tipo CSRF
+    [ADDED] Aggiunto controllo anche sulle $_SESSION[]
+    [FIX] Inserito controllo duplicazione sull'inserimento di Ban IP
+    [ADDED] Possibilità di scegliere qualunque cosa da cui proteggersi (Gestione TOTALE) [HOT]
+
 v1.0 RC2 
 	[FIX] Fixato un grave errore nell'installazione siccome non inseriva correttamente le regex nel DB [HOT]
 	[FIX] Fix SQL Injection in 0xSentinel.class.php (Thanks Ax3L)

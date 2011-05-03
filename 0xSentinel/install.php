@@ -17,9 +17,9 @@ if(!(is_writable('./config.php')))
 	die("Il file config.php non ha i permessi di scrittura, impostarli a 777 per i server UNIX-Like");
 	
 
-if( isset($_GET['delete']) && $_GET['delete'] == 1 ){
-	if( unlink("install.php") == FALSE ){
-		die("<p align='center'><b>Unable to delete installation file</b><br>Please delete install.php manually for security reasons !</p>");
+if( isset($_GET['delete']) && $_GET['delete'] == 1 ) {
+	if( (unlink("install.php") == FALSE) || (unlink("rules.sql") == FALSE) ) {
+		die("<p align='center'><b>Unable to delete installation file</b><br>Please delete install.php and rules.sql manually for security reasons !</p>");
 	}else{
 		header("location: login.php");
 	}
@@ -89,10 +89,10 @@ if( isset($_POST['install']) == FALSE ){
 	$db_connect = @mysql_connect( $_POST['host'], $_POST['user'], $_POST['pass'] );
 	$db_select  = @mysql_select_db( $_POST['name'] );
 	
-	if(!$db_connect){
+	if(!$db_connect) {
 		die("<b>Errore durante la connessione al database MySQL</b><br>".mysql_errno()." : ".mysql_error());
 	} 
-	elseif(!$db_select){
+	elseif(!$db_select) {
 		die("<b>Errore durante la selezione del database MySQL</b><br>".mysql_errno()." : ".mysql_error());
 	}
 
@@ -100,11 +100,11 @@ if( isset($_POST['install']) == FALSE ){
 		die("Errore durante l'apertura sul file config.php<br /> Prego di controllare i permessi sul file!");
 
 	if( !fwrite( $fd, "<?php\n"
-				 ."\t\$db_host = \"".$_POST['host']."\";\n"
-				 ."\t\$db_user = \"".$_POST['user']."\";\n"
-				 ."\t\$db_pass = \"".$_POST['pass']."\";\n"
-				 ."\t\$db_name = \"".$_POST['name']."\";\n"
-				 ."?>" ) ){
+				 ."\t\$db_host = \"".trim($_POST['host'])."\";\n"
+				 ."\t\$db_user = \"".trim($_POST['user'])."\";\n"
+				 ."\t\$db_pass = \"".trim($_POST['pass'])."\";\n"
+				 ."\t\$db_name = \"".trim($_POST['name'])."\";\n"
+				 ."?>" ) ) {
 		die("Errore durante la scrittura del file config.php<br /> Prego di controllare i permessi sul file!");
 	}
 
@@ -116,72 +116,66 @@ if( isset($_POST['install']) == FALSE ){
 						`regola` TEXT NOT NULL,
 						`descrizione` TEXT NOT NULL,
 						PRIMARY KEY  (`id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;";
-
-	$query_insert = "INSERT INTO `0xSentinel_rules` (`id`, `type`, `regola`, `descrizione`) VALUES
-(1, 'sql', '/select.+from.+(where)?.+/i', 'Blind SQL Injection'),
-(2, 'xss', '/alert(.+)?((.+)?)/i', 'Cross Site Scripting'),
-(3, 'sql', '/(''|&quot;)?.+or.+(''|&quot;)?.+/i', 'SQL Injection'),
-(4, 'sql', '/(--|drop|alter|create|union|select|order|by|and)/i', 'SQL Injection'),
-(5, 'sql', '/insert.+into.+value.+/i', 'SQL Injection'),
-(6, 'sql', '/union.+(all).?+select.+from.+(where)?.+/i', 'SQL Injection'),
-(7, 'lfi', '/(\\\.\\\.\\\/(.+)|\\\.\\\.\\\/|(.+)\\\/)/i', 'Local File Inclusion'),
-(8, 'rfi', '/(http|https|ftp|webdav)\\\:\\\/\\\/(www\\\.)?.+(\\\.[A-Za-z]{1-4})?/i', 'Remote File Inclusion'),
-(9, 'xss', '/(script|onclick|object|frame|iframe|frameset|img|applet|meta|style|form|onmouse|body|input|head|html)/i', 'Cross Site Scripting'),
-(10, 'log_poisoning', '/(<|%3C)\\\?(php)?(.+)\\\?>/i', 'Log Poisoning'),
-(11, 'lfi', '/(etc\\\/passwd|etc\\\/passwd|etc\\\/shadow|etc\\\/group|etc\\\/security\\\/passwd|etc\\\/security\\\/user)/i', 'Local File Inclusion'),
-(12, 'sql', '/update.+set.+/i', 'SQL Injection'),
-(13, 'sql', '/and.+[0-9]=[0-9]/i', 'SQL Injection'),
-(14, 'sql', '/\\\/\\\*(.+)?(\\\*\\\/)?/', 'SQL Injection');";
+					);";
+					
+    $read_file = fopen("rules.sql","r");
+    $dim_file  = filesize("rules.sql");
+    $content   = fread($read_file,$dim_file);//contenuto
+    fclose($read_file);
 
 	mysql_query($query_create) or die(mysql_error());
-	mysql_query($query_insert) or die(mysql_error());
+	mysql_query($content)      or die(mysql_error());
 	
 	$query_settings = "CREATE TABLE `0xSentinel_settings` (
-				`active` smallint(5) unsigned NOT NULL default '1',
+				`active` smallint(5) unsigned NOT NULL default 1,
 				`admin_user` TEXT NOT NULL,
 				`admin_pass` TEXT NOT NULL,
 				`email` TEXT NOT NULL,
-				`filter_get` smallint(5) unsigned NOT NULL default '1',
-				`filter_post` smallint(5) unsigned NOT NULL default '1',
-				`filter_cookie` smallint(5) unsigned NOT NULL default '1',
-				`filter_ip` smallint(5) unsigned NOT NULL default '1',				
-				`email_notify` smallint(5) unsigned NOT NULL default '1'		
-			  ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;";
+				`filter_get` smallint(5) unsigned NOT NULL default 1,
+				`filter_post` smallint(5) unsigned NOT NULL default 1,
+				`filter_cookie` smallint(5) unsigned NOT NULL default 1,
+				`filter_session` smallint(5) unsigned NOT NULL default 1,
+				`filter_ip` smallint(5) unsigned NOT NULL default 1,
+				`filter_csrf` smallint(5) unsigned NOT NULL default 1,
+				`filter_fpd` smallint(5) unsigned NOT NULL default 1,
+				`filter_scanner` smallint(5) unsigned NOT NULL default 1,
+				`email_notify` smallint(5) unsigned NOT NULL default 1
+			  );";
 			  
 	$query_settings_insert = "INSERT INTO `0xSentinel_settings` 
 						(`admin_user`, `admin_pass`, `email`) 
 						VALUES 
-						('".mysql_real_escape_string($_POST['admin_user'])."', '".md5($_POST['admin_pass'])."', '".mysql_real_escape_string($_POST['email'])."');";
+						('".mysql_real_escape_string(trim($_POST['admin_user']))."', '".md5(trim($_POST['admin_pass']))."', '".mysql_real_escape_string(trim($_POST['email']))."');";
 
-	mysql_query($query_settings) or die(mysql_error());
+	mysql_query($query_settings)        or die(mysql_error());
 	mysql_query($query_settings_insert) or die(mysql_error());
 	
 	
 	$query_logs = "CREATE TABLE `0xSentinel_logs` (
-				`id` INT NOT NULL AUTO_INCREMENT ,
-				`pagina` TEXT NOT NULL ,
-				`query_string` TEXT NOT NULL ,
-				`type_attack` TEXT NOT NULL ,
-				`referer` TEXT NOT NULL ,
-				`ip` TEXT NOT NULL ,
-				`data` TEXT NOT NULL,
-				PRIMARY KEY  (`id`)
-				) ENGINE = MYISAM DEFAULT CHARSET = latin1;";
+    				`id` INT NOT NULL AUTO_INCREMENT ,
+    				`pagina` TEXT NOT NULL ,
+    				`query_string` TEXT NOT NULL ,
+    				`type_attack` TEXT NOT NULL ,
+    				`referer` TEXT NOT NULL ,
+    				`ip` TEXT NOT NULL ,
+    				`data` TEXT NOT NULL,
+    				PRIMARY KEY  (`id`)
+				);";
 
 	mysql_query($query_logs) or die(mysql_error());
 	
 	$query_ban_ip = "CREATE TABLE `0xSentinel_ban_ip` (
-				`id` INT NOT NULL AUTO_INCREMENT ,
-				`ip` TEXT NOT NULL ,
-				`motivazione` TEXT NOT NULL ,
-				`data` TEXT NOT NULL ,
-				PRIMARY KEY  (`id`)
-				) ENGINE = MYISAM DEFAULT CHARSET = latin1;";
+    	    			`id` INT NOT NULL AUTO_INCREMENT ,
+    	    			`ip` TEXT NOT NULL ,
+    	    			`motivazione` TEXT NOT NULL ,
+          				`data` TEXT NOT NULL ,
+				        PRIMARY KEY  (`id`)
+				    );";
 
 	mysql_query($query_ban_ip) or die(mysql_error());	
 	
-	print "<h3 align='center'><b><font color='green'>Installation succesfully completed</font></b><br>Click <a href='?delete=1'>here</a> to delete installation file .</h3>";
+	print "\n<h3 align='center'><b><font color='green'>Installation succesfully completed</font></b>"
+	    . "\n<br />Click <a href='?delete=1'>here</a> to delete installation file .</h3>";
 }
 ?> 
 </table>

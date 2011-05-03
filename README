@@ -12,17 +12,14 @@ L'installazione è semplicissima basta infatti:
 Codice:
 <?php include("/0xSentinel/sentinel.php"); ?>
 
-nei file di configurazione della vostra applicazione o CMS (ad esempio dove si trovano i dati per accedere al MySQL)
-ed inseritelo come prima riga del file
+nei file di configurazione della vostra applicazione o CMS (solitamente dove si trovano i dati per accedere al MySQL)
+ed inseritelo come prima riga del file (Prima dell'apertura di qualsiasi tag HTML o PHP)
 
-6) installazione completata :D
+6) Installazione completata :D
+
+Requisiti:
+PHP => 5
+MySQL => 5
 
 
-=> UPGRADE
-
-Per effettuare l'aggiornamento dalla RC1 -> RC2 basta delettare tutti i file tranne il config.php e uplodare i file del nuovo 
-pacchetto di 0xSentinel tranne i file install.php e config.php, e se volete potete aggiornare le regex copiandole dal sorgente del file
-install.php del nuovo pacchetto di 0xSentinel RC2 :P
-
-Forum di supporto: http://0xproject.hellospace.net/forum
-
+Bug Report: http://0xproject.hellospace.net/bug_tracker
