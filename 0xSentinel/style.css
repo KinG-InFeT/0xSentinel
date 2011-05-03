@@ -1,0 +1,56 @@
+html, body {
+	background: #000000;
+	font-size: 11px;
+	color: #FFFFFF;
+	margin: 0px;
+	padding: 20px;
+	text-align: left;
+	font-family: monospace;
+}
+
+a:visited, a:link, a:active {
+	text-decoration: none;
+	color: #5588aa;
+}
+
+a:hover {
+	color: #ff6000;
+	text-decoration: underline;
+}
+
+td, th {
+	font-size: 11px;
+	color: #999999;
+}
+
+input {
+	font-family : monospace;
+	font-size : 13px;
+	color : #555;
+	background-color : #1A1A1A;
+	border : 2px solid #101010;
+}
+
+textarea {
+	max-width: 450px;
+	max-height: 300px;
+	border-width: 1px;
+	border-color: #000000;
+	border-style: solid;
+}
+
+.footer {
+	text-align: center;
+}
+
+table {
+	color: #fff;
+	border:2px solid #333;
+	backgrodund-color: #000;
+}
+
+tr {
+	color: #fff;
+	border:1px solid #333;
+	backgrodund-color: #000;
+}

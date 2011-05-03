@@ -1,0 +1,47 @@
+CHANGELOG FILE
+Progetto: 0xSentinel
+
+v1.0 RC2 
+	[FIX] Fixato un grave errore nell'installazione siccome non inseriva correttamente le regex nel DB [HOT]
+	[FIX] Fix SQL Injection in 0xSentinel.class.php (Thanks Ax3L)
+	[FIX] Fix blocco delle SQL Injection di tipo and con tutte le possibili combinazioni (Thanks hacku)
+	[REV] Revisione e piccoli ritocci alle regex di base nel sistema parsing
+	[FIX] Fix report dei logs per le regex di LFI e RFI
+	[CHANGE] Sistemata la schermata dei logs
+	[ADD] Aggiunto il controllo sulla versione installata, se essa è aggiornata oppure no (fichissima :D) [HOT]
+	[ADD] Aggiunta regex per i commenti MySQL :P (Thanks _mRkZ_)
+
+v1.0 RC1
+	[ADDED] Aggiunto il Ban per IP
+		[ADDED] Aggiunto possibilità di eliminare IP
+		[ADDED] Aggiunto possibilità di aggiungere IP
+		[ADDED] Aggiunta opzione di disabilitare il controllo BAN IP
+	[FIX] Sistemato il Menu iniziale, una volta loggato l'admin può visualizzare anceh la index.php con menu da amministratore :P
+	[ADDED] Aggiunto il banner dinamico alla evilsentinel :P (Grafica By Syper_Sabry)
+	[FIX] Piccoli accorgimenti alla funzione edit_rules()
+	[ADDED] Aggiunta la possibilità di attivare o disattivare le notifiche degli attacchi tramite email :P
+	[ADDED] Aggiunto filtro validatore di email qual'ora l'admin decidesse di cambiare email di notifica ;) (Thanks Hacker97)
+	[ADDED] Aggiunto controllo sul CSRF/XSRF alla sentinella (Thanks Andr3a92)
+	[FIX] Fixed multiple XSS on function blocca() and email_notification() and login()
+	[ADDED] Aggiunte intestazioni ai file
+	[ADDED] Codice html reperibile dalla pagina Banner :D
+	[ADDED] Aggiunto controllo sulla versione del PHP installata sul server :S
+	[ADDED] Aggiunte regex per il controllo di scanner come Nikto ecc...
+	[CHANGE] Cambiata grafica in Status ora inserite le immagini on e off :P (Thanks evilsocket)
+	[FIX] Sistemata un pò l'otput dell'HTML
+					
+v1.0 Beta
+	[FIX] Fixed Admin privileges escalations [HOT]
+	[FIX] Fixed $_SESSION ByPass [HOT]
+	[FIX] Fixato l'invio del report tramite email in formato HTML
+	[ADDED] Aggiunto controllo sulle classi in /lib/ così da diventare impossibili da linkare direttamente
+	[FIX] Fixed Multiple SQL Injection in install.php
+	[ADDED] Inserito controllo in login.php
+	[FIX] Sistemati gli include() nelle classi :P
+	[FIX] Fixed Multiple Permanent XSS in admin.php (Thanks cGOD)
+	[FIX] Fix di tutte le regex per il controllo input :D
+	[FIX] Alcuni fix nella pagina di Blocco della sentinella
+	[=] Revisione totale del codice e della identazione
+									
+v1.0 Pre-Alpha
+	[=] First Release

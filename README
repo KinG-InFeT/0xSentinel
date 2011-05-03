@@ -1,0 +1,28 @@
+                0xSentinel - Web Security Application
+
+=> INSTALLAZIONE
+
+L'installazione è semplicissima basta infatti:
+1) Uppare la cartella 0xSentinel nella root del vostro sito
+2) andare sulla pagina index.php e verrete indirizzati alla pagina di installazione cliccando sul messaggio in fondo
+3) Seguire le istruzioni dell'installazione
+4) entrare come amministratore con i dati appena creati e configurare il tutto come meglio si crede
+5) inserire il seguente codice PHP
+
+Codice:
+<?php include("/0xSentinel/sentinel.php"); ?>
+
+nei file di configurazione della vostra applicazione o CMS (ad esempio dove si trovano i dati per accedere al MySQL)
+ed inseritelo come prima riga del file
+
+6) installazione completata :D
+
+
+=> UPGRADE
+
+Per effettuare l'aggiornamento dalla RC1 -> RC2 basta delettare tutti i file tranne il config.php e uplodare i file del nuovo 
+pacchetto di 0xSentinel tranne i file install.php e config.php, e se volete potete aggiornare le regex copiandole dal sorgente del file
+install.php del nuovo pacchetto di 0xSentinel RC2 :P
+
+Forum di supporto: http://0xproject.hellospace.net/forum
+
