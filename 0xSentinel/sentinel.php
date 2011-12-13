@@ -1,14 +1,17 @@
 <?php
 session_start();
-/**
- * File: sentinel.php
- * 
- * La pagina più impostante XD
+/*
  *
- * @author KinG-InFeT <info@kinginfet.net>
- * @copyright GPL
+ * @project 0xSentinel
+ * @author KinG-InFeT
+ * @licence GNU/GPL
+ *
+ * @file sentinel.php
+ *
+ * @link http://0xproject.netsons.org#0xSentinel
+ *
  */
-
+ 
 include("config.php");
 include_once("lib/mysql.class.php");
 include_once("lib/0xSentinel.class.php");

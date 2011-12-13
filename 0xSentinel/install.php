@@ -1,11 +1,14 @@
 <?php
-/**
- * File: install.php
- * 
- * File per l'installazione
+/*
  *
- * @author KinG-InFeT <info@kinginfet.net>
- * @copyright GPL
+ * @project 0xSentinel
+ * @author KinG-InFeT
+ * @licence GNU/GPL
+ *
+ * @file install.php
+ *
+ * @link http://0xproject.netsons.org#0xSentinel
+ *
  */
  
 if(!(phpversion() >= '5.2.0')) {

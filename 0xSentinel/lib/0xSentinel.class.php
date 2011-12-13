@@ -4,7 +4,7 @@
  * 
  * La classe che gestisce l'intero sistema di sicurezza
  *
- * @author KinG-InFeT <info@kinginfet.net>
+ * @author KinG-InFeT <king-infet@autistici.org>
  * @copyright GPL
  */
 
@@ -139,7 +139,7 @@ class Sentinel extends MySQL
 		  . "\n <table border=\"0\" width=\"600\" cellpadding=\"0\" cellspacing=\"0\" class=\"testo\">"
 		  . "\n  <tr><td rowspan=\"2\" width=\"10\"><td bgcolor=\"#E1E1E1\" height=\"1\"></td><td rowspan=\"2\" width=\"10\"></tr>"
 		  . "\n  <tr>"
-		  . "\n    <td height=\"25\" align=\"center\" class=\"shiny\"><em><a href=\"http://0xproject.hellospace.net/#0xSentinel\">0xSentinel</a> - Copyleft 2010 By <a href=\"mailto:info@kinginfet.net\">KinG-InFeT</a></em></td>"
+		  . "\n    <td height=\"25\" align=\"center\" class=\"shiny\"><em><a href=\"http://0xproject.netsons.org/#0xSentinel\">0xSentinel</a> - Copyleft 2010 By <a href=\"mailto:king-infet@autistici.org\">KinG-InFeT</a></em></td>"
 		  . "\n  </tr>"
 		  . "\n"
 		  . "\n </table>"
@@ -213,7 +213,7 @@ class Sentinel extends MySQL
 		        . "\n    <td><br />Se pensi che il sistema di sicurezza 0xSentinel ha bloccato un Falso Positivo, contatta <a href=\"meilto:".$row[0]."\">l'ammministratore</a> del sito e provvederà al fix delle regole</td>"
          	    . "\n    </tr>"
 				. "\n<tr> "
-				. "\n<td height=\"38\" align='right'><em><a href=\"http://0xproject.hellospace.net/#0xSentinel\">0xSentinel</a> By <a href=\"http://www.kinginfet.net/\">KinG-InFeT</a></em></td>"
+				. "\n<td height=\"38\" align='right'><em><a href=\"http://0xproject.netsons.org/#0xSentinel\">0xSentinel</a> By <a href=\"http://www.kinginfet.net/\">KinG-InFeT</a></em></td>"
 				. "\n</tr>"
 				. "\n</table>"
 				. "\n</body>"
@@ -490,7 +490,7 @@ class Sentinel extends MySQL
 				. "\n</td>"
 				. "\n</tr>"
 				. "\n<tr> "
-				. "\n<td height=\"38\" align='right'><em><a href=\"http://0xproject.hellospace.net/#0xSentinel\">0xSentinel</a> By <a href=\"http://www.kinginfet.net/\">KinG-InFeT</a></em></td>"
+				. "\n<td height=\"38\" align='right'><em><a href=\"http://0xproject.netsons.org/#0xSentinel\">0xSentinel</a> By <a href=\"http://www.kinginfet.net/\">KinG-InFeT</a></em></td>"
 				. "\n</tr>"
 				. "\n</table>"
 				. "\n</body>"

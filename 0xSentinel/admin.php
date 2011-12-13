@@ -1,11 +1,14 @@
 <?php
-/**
- * File: admin.php
- * 
- * Pagina di amministrazione e gestione del CMS
+/*
  *
- * @author KinG-InFeT <info@kinginfet.net>
- * @copyright GPL
+ * @project 0xSentinel
+ * @author KinG-InFeT
+ * @licence GNU/GPL
+ *
+ * @file admin.php
+ *
+ * @link http://0xproject.netsons.org#0xSentinel
+ *
  */
 
 session_start();

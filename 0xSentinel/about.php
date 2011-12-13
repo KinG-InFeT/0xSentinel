@@ -1,11 +1,14 @@
 <?php
-/**
- * File: about.php
- * 
- * Pagina di About :P
+/*
  *
- * @author KinG-InFeT <info@kinginfet.net>
- * @copyright GPL
+ * @project 0xSentinel
+ * @author KinG-InFeT
+ * @licence GNU/GPL
+ *
+ * @file about.php
+ *
+ * @link http://0xproject.netsons.org#0xSentinel
+ *
  */
 
 include("config.php");
@@ -54,7 +57,7 @@ echo "<br /><br />\n"
 ?>
     </tr>
   <tr>
-    <td height="38" align='right'><em><a href='http://0xproject.hellospace.net/#0xSentinel'>0xSentinel</a> - Copyleft 2010 By <a href="http://www.kinginfet.net/">KinG-InFeT</a></em></td>
+    <td height="38" align='right'><em><a href='http://0xproject.netsons.org/#0xSentinel'>0xSentinel</a> - Copyleft 2010 By <a href="http://www.kinginfet.net/">KinG-InFeT</a></em></td>
   </tr>
 </table>
 </body>

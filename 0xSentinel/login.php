@@ -1,11 +1,14 @@
 <?php
-/**
- * File: login.php
- * 
- * Pagina per il Login all'amministrazione
+/*
  *
- * @author KinG-InFeT <info@kinginfet.net>
- * @copyright GPL
+ * @project 0xSentinel
+ * @author KinG-InFeT
+ * @licence GNU/GPL
+ *
+ * @file login.php
+ *
+ * @link http://0xproject.netsons.org#0xSentinel
+ *
  */
 
 session_start();

@@ -1,11 +1,14 @@
 <?php
-/**
- * File: index.php
- * 
- * Home Page del CMS
+/*
  *
- * @author KinG-InFeT <info@kinginfet.net>
- * @copyright GPL
+ * @project 0xSentinel
+ * @author KinG-InFeT
+ * @licence GNU/GPL
+ *
+ * @file index.php
+ *
+ * @link http://0xproject.netsons.org#0xSentinel
+ *
  */
 
 session_start();

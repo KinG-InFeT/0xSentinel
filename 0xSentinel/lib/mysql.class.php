@@ -4,7 +4,7 @@
  * 
  * Classe che gestisce tutte le connessioni del MySQL
  *
- * @author KinG-InFeT <info@kinginfet.net>
+ * @author KinG-InFeT <king-infet@autistici.org>
  * @copyright GPL
  */
 

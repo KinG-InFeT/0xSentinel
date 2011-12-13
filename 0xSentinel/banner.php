@@ -1,11 +1,14 @@
 <?php
-/**
- * File: banner.php
- * 
- * Generatore del banner dinamico
+/*
  *
- * @author KinG-InFeT <info@kinginfet.net>
- * @copyright GPL
+ * @project 0xSentinel
+ * @author KinG-InFeT
+ * @licence GNU/GPL
+ *
+ * @file banner.php
+ *
+ * @link http://0xproject.netsons.org#0xSentinel
+ *
  */
  
 include("config.php");

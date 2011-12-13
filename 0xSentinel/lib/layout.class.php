@@ -4,11 +4,11 @@
  * 
  * Classe che gestisce l'intero layout grafico
  *
- * @author KinG-InFeT <info@kinginfet.net>
+ * @author KinG-InFeT <king-infet@autistici.org>
  * @copyright GPL
  */
 
-define("VERSION","1.0");
+define("VERSION","1.0.1");
 
 if (preg_match("/layout.class.php/", $_SERVER['PHP_SELF'])) die(htmlspecialchars($_SERVER['PHP_SELF']));
 
@@ -82,7 +82,7 @@ class layout
 	 */	
 	public function footer() {
 		print "<br /><br />\n<hr />\n<br />\n"
-		."<p class='footer'>Powered By <a href='http://0xproject.hellospace.net/#0xSentinel'>0xSentinel - v".VERSION."</a></p>\n"
+		."<p class='footer'>Powered By <a href='http://0xproject.netsons.org/#0xSentinel'>0xSentinel - v".VERSION."</a></p>\n"
 		."</body>\n"
 		."</html>\n";
 	}

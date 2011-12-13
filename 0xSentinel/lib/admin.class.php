@@ -4,7 +4,7 @@
  * 
  * Classe che gestisce gli strumenti di amministrazione
  *
- * @author KinG-InFeT <info@kinginfet.net>
+ * @author KinG-InFeT <king-infet@autistici.org>
  * @copyright GPL
  */
 
@@ -13,31 +13,14 @@ if (preg_match("/admin.class.php/", $_SERVER['PHP_SELF'])) die(htmlspecialchars(
 include_once("mysql.class.php");
 
 class Admin extends MySQL
-{
-    //Old Function :(
-    /*
-	public function check_version() {
-		$link = 'http://www.0xproject.hellospace.net/versions/0xSentinel.txt';
-		$version_ufficial = file_get_contents($link);
-		$version = VERSION;
-		
-		if ($version != $version_ufficial) {
-			echo "<script language=\"JavaScript\">if(confirm('Uscita la versione " . $version_ufficial . ". Vuoi venire reindirizzato alla pagina di download?.'))
-			{
-				 location.href = 'http://www.0xproject.hellospace.net/#0xSentinel';
-			}
-			</script>";
-		}
-	}
-	*/
-	
+{	
 	public function check_version($version) {
 		
 		$update = NULL;
 		
-		if ($fsock = @fsockopen('www.0xproject.hellospace.net', 80, $errno, $errstr, 10)) {
+		if ($fsock = @fsockopen('www.0xproject.netsons.org', 80, $errno, $errstr, 10)) {
 			@fputs($fsock, "GET /versions/0xSentinel.txt HTTP/1.1\r\n");
-			@fputs($fsock, "HOST: www.0xproject.hellospace.net\r\n");
+			@fputs($fsock, "HOST: www.0xproject.netsons.org\r\n");
 			@fputs($fsock, "Connection: close\r\n\r\n");
 	
 			$get_info = FALSE;
@@ -61,7 +44,7 @@ class Admin extends MySQL
 				$version_info = "<p style=\"color:green\">Non ci sono aggiornamenti per il sistema.</p><br />";
 			else
 				$version_info = "\n<p style=\"color:red\">Ci sono aggiornamenti per il sistema.<br />\nAggiorna all' ultima versione: ". $update."\n"
-							  . "<br /><br />Link Download: <a href=\"http://0xproject.hellospace.net/#0xSentinel\">Scarica l' ultima versione</a><br />\n";
+							  . "<br /><br />Link Download: <a href=\"http://0xproject.netsons.org/#0xSentinel\">Scarica l' ultima versione</a><br />\n";
 		}else{
 			if ($errstr)
 				$version_info = '<p style="color:red">' . sprintf("Impossibile aprire la connessione a 0xProject Server, ha riferito il sequente errore:<br />%s", $errstr) . '</p>';

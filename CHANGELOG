@@ -1,5 +1,7 @@
 CHANGELOG FILE
-Progetto: 0xSentinel
+
+v1.0.1
+    [CHANGE] Change all links of hellospace.net
 
 v1.0 !Stable!
     [FIX] Minor bug fix in the installazion steps and SQL Create table

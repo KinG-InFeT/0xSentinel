@@ -4,7 +4,7 @@
  * 
  * Classe che gestisce gli strumenti di amministrazione del sistema di Ban IP
  *
- * @author KinG-InFeT <info@kinginfet.net>
+ * @author KinG-InFeT <king-infet@autistici.org>
  * @copyright GPL
  */
 
